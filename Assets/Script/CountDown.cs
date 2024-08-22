@@ -23,9 +23,11 @@ public class CountDown : MonoBehaviour
         step_time -= Time.deltaTime;
 
         count = (int)step_time;
+        
 
         if (count > 0)
         {
+            
 
             CountText.text = count.ToString();
 
