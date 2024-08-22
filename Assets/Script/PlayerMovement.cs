@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float limit = 5f;
     public Animator animator;
     public bool hit;
+    public bool stand;
     public bool climb;
     public bool start;
     public bool clear;
@@ -76,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
+            moveSpeed = 4.5f;
             subCamera.SetActive(false);
             mainCamera.SetActive(true);
 
@@ -109,8 +109,10 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.Translate(Vector3.back * Time.deltaTime * moveSpeed, Space.World);
         yield return new WaitForSeconds(0.6f);
+        moveSpeed = 0;
+        animator.SetTrigger("Stand");
+        yield return new WaitForSeconds(2.0f);
         hit = false;
-        animator.SetBool("Hit", hit);
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -118,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.name == "enemy")
         {
             hit = true;
-            animator.SetBool("Hit", hit);
+            animator.SetTrigger("Fall");
         }
 
         if (collision.gameObject.name == "Stairs")
@@ -136,7 +138,6 @@ public class PlayerMovement : MonoBehaviour
             goal = true;
             animator.SetBool("Goal", goal);
             Destroy(Character);
-            SceneManager.LoadScene("Clear");
         }
     }
 
