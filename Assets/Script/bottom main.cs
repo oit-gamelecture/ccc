@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class bottom : MonoBehaviour
+public class bottommain : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public void StartButton()
+    public void StartCount()
     {
-        SceneManager.LoadScene("exple");
+        SceneManager.LoadScene("CountStart");
     }
 
 }
