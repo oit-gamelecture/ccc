@@ -31,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         mainCamera = GameObject.Find("MainCamera");
         subCamera = GameObject.Find("SubCamera");
         clearObject = GameObject.Find("ClearObject");
