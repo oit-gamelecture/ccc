@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float leftRightSpeed = 4f;
     public float limit = 5f;
     public Animator animator;
+    private bool hitchecker;
     public bool hit;
     public bool stand;
     public bool climb;
@@ -35,20 +36,21 @@ public class PlayerMovement : MonoBehaviour
         subCamera = GameObject.Find("SubCamera");
         clearObject = GameObject.Find("ClearObject");
         Character = GameObject.Find("m01_blazer_000_h");
+        hitchecker = false;
 
         subCamera.SetActive(false);
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
 
 
-        if (hit == true)
+        if (hit == true &&  hitchecker==false)
         {
-            StartCoroutine("Hoge");
+            StartCoroutine(Hoge());
         }
 
         else if (climb == true)
@@ -75,9 +77,9 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-            moveSpeed = 4.5f;
             subCamera.SetActive(false);
             mainCamera.SetActive(true);
+            animator.SetTrigger("Run");
 
             transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed, Space.World);
             moveSpeed += Time.deltaTime * acceleration;
@@ -107,22 +109,22 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator Hoge()
     {
+        animator.SetTrigger("Fall");
         transform.Translate(Vector3.back * Time.deltaTime * moveSpeed, Space.World);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.8f);
+
         moveSpeed = 0;
         animator.SetTrigger("Stand");
+        Debug.Log(moveSpeed);
         yield return new WaitForSeconds(2.0f);
+
+        animator.SetTrigger("Run");
+        moveSpeed = 4.5f;
         hit = false;
+        hitchecker = false;
     }
     void OnCollisionEnter(Collision collision)
     {
-
-        if (collision.gameObject.name == "enemy")
-        {
-            hit = true;
-            animator.SetTrigger("Fall");
-        }
-
         if (collision.gameObject.name == "Stairs")
         {
             climb = true;
@@ -151,7 +153,11 @@ public class PlayerMovement : MonoBehaviour
          if (collision.gameObject.name == "StartObject")
         {
             start = true; 
-        }   
+        }
+        if (collision.gameObject.CompareTag ("enemy"))
+        {
+            hit = true;
+        }
 
     }
 
@@ -161,6 +167,11 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag ("Stairs"))
         {
             climb = false;
+        }
+
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            animator.SetTrigger("Run");
         }
     }
 }
