@@ -1410,8 +1410,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: 45}
-  m_SizeDelta: {x: 300, y: 299}
+  m_AnchoredPosition: {x: 70, y: -50}
+  m_SizeDelta: {x: 300, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1546327360
 MonoBehaviour:
@@ -1426,7 +1426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.990566, g: 0.978106, b: 0.978106, a: 1}
+  m_Color: {r: 0.065891124, g: 0.066037714, b: 0.06396105, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1435,11 +1435,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 64
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 64
+    m_MaxSize: 128
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1563,7 +1563,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1546327358}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1932665877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1748,7 +1748,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4cd00fa46a447d447a171e43656e2355, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.204
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1878,6 +1878,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 892298757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1932665877 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8855229446846071359, guid: 67ee713e26e22db4fb1febc4f1cedd7f, type: 3}
+  m_PrefabInstance: {fileID: 2016249316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1938887928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7556542730810358670, guid: e36ef535821fab948827169add184461, type: 3}
@@ -1957,7 +1962,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8855229446846071359, guid: 67ee713e26e22db4fb1febc4f1cedd7f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1559732424}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67ee713e26e22db4fb1febc4f1cedd7f, type: 3}
 --- !u!1001 &8460217091589300282
@@ -2046,9 +2054,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 705507995}
-  - {fileID: 2016249316}
-  - {fileID: 1559732424}
   - {fileID: 294269763}
+  - {fileID: 2016249316}
   - {fileID: 284591451}
   - {fileID: 8460217091589300282}
   - {fileID: 274561761}
