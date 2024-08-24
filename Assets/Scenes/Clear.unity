@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -494,7 +494,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "~CLEAR~\n\u5B66\u6821\u306B\u9593\u306B\u5408\u3063\u305F\uFF01"
+  m_Text: "~CLEAR~\n\u96FB\u8ECA\u306B\u9593\u306B\u5408\u3063\u305F\uFF01"
 --- !u!222 &622713896
 CanvasRenderer:
   m_ObjectHideFlags: 0
