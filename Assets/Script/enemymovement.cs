@@ -6,16 +6,18 @@ using UnityEngine;
 public class enemymovement : MonoBehaviour
 {
     public Animator enemyanimator;
-    public bool down;
+    public bool fall;
     public bool help;
     public Vector3 targetPosition;
     public float speed = 3.0f;
     public float downspeed = -0.6f;
     [SerializeField] Transform movetarget;
+    BoxCollider boxCol;
     // Start is called before the first frame update
     void Start()
     {
-        down = false;
+        boxCol = GetComponent<BoxCollider>();
+        fall = false;
         help = false;
 
     }
@@ -23,14 +25,15 @@ public class enemymovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (down == false)
+        if (fall == false)
         {
             Vector3 direction = (movetarget.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, movetarget.position, speed * Time.deltaTime);
         }
 
-        if (down == true)
+        if (fall == true)
         {
+            boxCol.enabled = false;
             StartCoroutine(Down());
         }
 
@@ -50,7 +53,7 @@ public class enemymovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("character"))
         {
-            down = true;
+            fall = true;
         }
     }
 }
