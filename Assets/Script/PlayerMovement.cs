@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public bool clear;
     public bool goal;
     private GameObject mainCamera;
-    private GameObject subCamera;
+    private GameObject SubCamera;
     private GameObject clearObject;
     private GameObject Character;
     public Vector3 targetPosition;
@@ -33,11 +33,11 @@ public class PlayerMovement : MonoBehaviour
     {
 
         mainCamera = GameObject.Find("MainCamera");
-        subCamera = GameObject.Find("SubCamera");
+        SubCamera = GameObject.Find("SubCamera");
         clearObject = GameObject.Find("ClearObject");
         Character = GameObject.Find("m01_blazer_000_h");
 
-        subCamera.SetActive(false);
+        SubCamera.SetActive(false);
         Application.targetFrameRate = 60;
     }
 
@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         else if (clear == true)
         {
             mainCamera.SetActive(false);
-            subCamera.SetActive(true);
+            SubCamera.SetActive(true);
             Destroy(clearObject);
             Vector3 direction = (target.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, target.position, goalspeed * Time.deltaTime);
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-            subCamera.SetActive(false);
+            SubCamera.SetActive(false);
             mainCamera.SetActive(true);
 
             transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed, Space.World);
@@ -107,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator Hoge()
     {
+        GetComponent<AudioSource>().Play();
         transform.Translate(Vector3.back * Time.deltaTime * moveSpeed, Space.World);
         yield return new WaitForSeconds(0.6f);
         hit = false;
