@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,19 +9,22 @@ public class PlayerMovement : MonoBehaviour
     public float leftRightSpeed = 4f;
     public float limit = 5f;
     public Animator animator;
+    private bool hitchecker;
     public bool hit;
+    public bool stand;
     public bool climb;
     public bool start;
     public bool clear;
     public bool goal;
     private GameObject mainCamera;
-    private GameObject SubCamera;
+    private GameObject subCamera;
     private GameObject clearObject;
     private GameObject Character;
     public Vector3 targetPosition;
     private float goalspeed = 2.0f;
     [SerializeField] Transform target;
     public float rotationspeed = 60f;
+    int test = 0;
 
 
 
@@ -31,25 +32,31 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         mainCamera = GameObject.Find("MainCamera");
-        SubCamera = GameObject.Find("SubCamera");
+        subCamera = GameObject.Find("SubCamera");
         clearObject = GameObject.Find("ClearObject");
         Character = GameObject.Find("m01_blazer_000_h");
+        hitchecker = false;
 
-        SubCamera.SetActive(false);
-        Application.targetFrameRate = 60;
+        subCamera.SetActive(false);
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
 
 
-        if (hit == true)
+        if (hit == true &&  hitchecker==false)
         {
-            StartCoroutine("Hoge");
+            hit = false;
+            Debug.Log(test);
+            test++;
+            //animator.SetTrigger("Fall");
+            Debug.Log("fall1");
+            StartCoroutine(Hoge());
+            Debug.Log("fall2");
         }
 
         else if (climb == true)
@@ -61,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         else if (clear == true)
         {
             mainCamera.SetActive(false);
-            SubCamera.SetActive(true);
+            subCamera.SetActive(true);
             Destroy(clearObject);
             Vector3 direction = (target.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, target.position, goalspeed * Time.deltaTime);
@@ -71,13 +78,14 @@ public class PlayerMovement : MonoBehaviour
 
         else if (start == true)
         {
-
+          
         }
 
         else
         {
-            SubCamera.SetActive(false);
+            subCamera.SetActive(false);
             mainCamera.SetActive(true);
+            animator.SetTrigger("Run");
 
             transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed, Space.World);
             moveSpeed += Time.deltaTime * acceleration;
@@ -107,21 +115,23 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator Hoge()
     {
-        GetComponent<AudioSource>().Play();
+        //hit = false;
+        animator.SetTrigger("Fall");
+        moveSpeed = -4.5f;
         transform.Translate(Vector3.back * Time.deltaTime * moveSpeed, Space.World);
-        yield return new WaitForSeconds(0.6f);
-        hit = false;
-        animator.SetBool("Hit", hit);
+        yield return new WaitForSeconds(0.8f);
+        moveSpeed = 0;
+        Debug.Log(moveSpeed);
+        yield return new WaitForSeconds(2.0f);
+
+        
+        moveSpeed = 4.5f;
+        
+        hitchecker = false;
+        Debug.Log(moveSpeed);
     }
     void OnCollisionEnter(Collision collision)
     {
-
-        if (collision.gameObject.name == "enemy")
-        {
-            hit = true;
-            animator.SetBool("Hit", hit);
-        }
-
         if (collision.gameObject.name == "Stairs")
         {
             climb = true;
@@ -132,25 +142,28 @@ public class PlayerMovement : MonoBehaviour
             clear = true;
         }
 
-        if (collision.gameObject.name == "GoalObject")
+        if(collision.gameObject.name == "GoalObject")
         {
             goal = true;
             animator.SetBool("Goal", goal);
             Destroy(Character);
-            SceneManager.LoadScene("Clear");
         }
     }
 
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Stairs"))
+         if (collision.gameObject.CompareTag ("Stairs"))
         {
-            climb = true;
+            climb = true;          
         }
 
-        if (collision.gameObject.name == "StartObject")
+         if (collision.gameObject.name == "StartObject")
         {
-            start = true;
+            start = true; 
+        }
+        if (collision.gameObject.CompareTag ("enemy"))
+        {
+            hit = true;
         }
 
     }
@@ -158,9 +171,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Stairs"))
+        if (collision.gameObject.CompareTag ("Stairs"))
         {
             climb = false;
+        }
+
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            animator.SetTrigger("Run");
         }
     }
 }
