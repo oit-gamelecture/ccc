@@ -7,8 +7,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 3.0f;
     public float acceleration = 0.01f;
-    public float leftRightSpeed = 4f;
-    public float limit = 5f;
+    public float leftRightSpeed = 0.1f;
+    public double limit = 5f;
+    public double limita = 2.0f;
     public Animator animator;
     private bool hitchecker;
     public bool hit;
@@ -46,7 +47,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        if (transform.position.z > 0) // ‘Oi‚µ‚Ä‚¢‚é‚Æ‚«‚Ì‚ÝŒ¸­‚³‚¹‚é
+        {
+            limita -= Time.deltaTime * 0.0000001f; // Œ¸­‘¬“x‚ð’²®
+        }
 
 
         if (hit == true &&  hitchecker==false)
@@ -93,17 +97,21 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                if (transform.position.x > -limit)
+                if (transform.position.x > -limita)
                 {
-                    transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed);
+                   //transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed);
+                    Vector3 movedir = new Vector3(-leftRightSpeed, 0, 0);
+                    transform.position += movedir;
                 }
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                if (transform.position.x < limit)
+                if (transform.position.x < limita)
                 {
-                    transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed * -1);
+                    //transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed * -1);
+                   Vector3 movedir = new Vector3( leftRightSpeed , 0, 0);
+                   transform.position += movedir;
                 }
             }
 
