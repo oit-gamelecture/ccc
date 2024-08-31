@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -147,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
             goal = true;
             animator.SetBool("Goal", goal);
             Destroy(Character);
+            SceneManager.LoadScene("Clear");
         }
     }
 
